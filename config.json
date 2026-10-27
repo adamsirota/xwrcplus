@@ -1,0 +1,12 @@
+{
+  "start_season": 2016,
+  "application_season": 2026,
+  "history_start": 1990,
+  "min_train_pa": 100,
+  "min_rank_pa": 300,
+  "gap_threshold": 10,
+  "input_csv": null,
+  "data_label": "MLB regular-season source data",
+  "results_dir": "results",
+  "sensitivity": true
+}
