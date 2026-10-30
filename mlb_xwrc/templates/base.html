@@ -30,7 +30,7 @@
     <a href="{{ url_for('validation') }}" {% if nav=='validation' %}class="active" aria-current="page"{% endif %}>{{ icon('chart') }}<span>Model validation</span><span class="nav-index">02</span></a>
     <a href="{{ url_for('methodology') }}" {% if nav=='methodology' %}class="active" aria-current="page"{% endif %}>{{ icon('book') }}<span>Research notes</span><span class="nav-index">03</span></a>
   </nav>
-  <div class="sidebar-note"><span class="eyebrow">READ THE SIGNAL</span><p>A season tells one story.<br>The underlying skills<br>can tell another.</p><div class="seam" aria-hidden="true"></div></div>
+  <div class="sidebar-note"><span class="eyebrow">PERFORMANCE MEASURES</span><p>Actual wRC+.<br>Expected performance.<br>Next-season forecasts.</p><div class="seam" aria-hidden="true"></div></div>
   <div class="sidebar-footer"><span class="status-dot" aria-hidden="true"></span><span>{% if s %}{{ s.total_seasons|num(0) }} player-seasons<small>Historical data · {{ s.config.start_season }}–{{ s.year }}</small>{% else %}Saved analysis<small>Local research dashboard</small>{% endif %}</span></div>
 </aside>
 <div class="workspace">

@@ -25,7 +25,8 @@ body {
   background:var(--paper);
   font-family:var(--font);
   font-size:14px;
-  line-height:1.55
+  line-height:1.55;
+  font-variant-numeric:tabular-nums
 }
 a {
   color:inherit;
@@ -141,7 +142,7 @@ main:focus {
   padding:0 8px;
   color:#f6f4ee;
   font-size:29px;
-  font-weight:650;
+  font-weight:600;
   letter-spacing:-1.5px;
   line-height:1
 }
@@ -322,7 +323,7 @@ h1 {
   font-size:36px;
   line-height:1.2;
   letter-spacing:-1.5px;
-  font-weight:650;
+  font-weight:600;
   margin:0 0 10px
 }
 .heading-period {
@@ -472,13 +473,10 @@ h1 {
   height:34px;
   display:grid;
   place-items:center;
-  background:var(--teal-wash);
   color:var(--teal);
-  border-radius:50%;
   flex-shrink:0
 }
 .down .signal-icon {
-  background:var(--rust-wash);
   color:var(--rust)
 }
 .signal-change {
@@ -539,7 +537,7 @@ h1 {
 .count-badge {
   border:1px solid var(--line);
   background:var(--soft);
-  border-radius:20px;
+  border-radius:var(--radius);
   padding:4px 9px;
   font:9px var(--mono);
   color:var(--muted);
@@ -686,6 +684,9 @@ thead th>span {
   margin-bottom:3px;
   letter-spacing:.04em
 }
+table th.number {
+  text-align:right
+}
 tbody th {
   font-weight:500
 }
@@ -719,7 +720,7 @@ td.forecast-col,th.forecast-col {
   font-size:11px
 }
 .player-table .forecast-col {
-  font-weight:650
+  font-weight:600
 }
 .player-name {
   display:flex;
@@ -754,18 +755,15 @@ td.forecast-col,th.forecast-col {
 .gap-tag {
   display:inline-block;
   font:10px var(--mono);
-  border-radius:3px;
   padding:3px 6px;
   min-width:46px;
-  text-align:center
+  text-align:right
 }
 .gap-tag.below {
-  color:var(--teal);
-  background:var(--teal-wash)
+  color:var(--teal)
 }
 .gap-tag.above {
-  color:var(--rust);
-  background:var(--rust-wash)
+  color:var(--rust)
 }
 .table-footer {
   padding:16px 20px;
@@ -1011,7 +1009,7 @@ td.forecast-col,th.forecast-col {
 }
 .prose h2 {
   font-size:25px;
-  font-weight:550;
+  font-weight:500;
   letter-spacing:-.75px;
   line-height:1.35;
   margin:8px 0 20px;
@@ -1257,6 +1255,9 @@ td.forecast-col,th.forecast-col {
   border:1px solid var(--line);
   border-radius:5px;
   font:12px/1.8 var(--mono)
+}
+.summary-strip strong,.player-metrics strong,.season-switch>div,.count-badge,.table-footer,.axis-text,.scale-number,.nav-index {
+  font-variant-numeric:tabular-nums
 }
 @media(min-width:1600px) {
   .player-table th,.player-table td {

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% from '_macros.html' import icon, change, initials %}
 {% block content %}
-<div class="page-heading"><div><p class="eyebrow">THE {{ s.year }} → {{ s.year+1 }} OUTLOOK</p><h1>Player explorer<span class="heading-period">.</span></h1><p class="lead">Look past the results. Find the next season’s signal.</p></div><a class="button button-primary" href="{{ export_url }}">{{ icon('download') }} Export this view</a></div>
+<div class="page-heading"><div><p class="eyebrow">THE {{ s.year }} → {{ s.year+1 }} OUTLOOK</p><h1>Player explorer<span class="heading-period">.</span></h1><p class="lead">Compare actual results, expected performance, and next-season forecasts.</p></div><a class="button button-primary" href="{{ export_url }}">{{ icon('download') }} Export this view</a></div>
 <div class="dataset-label">{{ s.data_label }} <span>·</span> Regular season <span>·</span> Model estimates</div>
 <section class="summary-strip" aria-label="Study summary">
   <div><span class="metric-label">Eligible hitters</span><strong>{{ s.eligible|num(0) }}</strong><span>{{ s.config.min_rank_pa }}+ plate appearances</span></div>
@@ -43,7 +43,7 @@
 {% for p in scatter.points %}<circle cx="{{ p.x }}" cy="{{ p.y }}" r="3.6" class="scatter-dot {{ 'below-dot' if p.gap<0 else 'above-dot' }}"><title>{{ p.name }} · actual {{ p.actual|num }} · expected {{ p.expected|num }}</title></circle>{% endfor %}
 <text class="axis-title" x="173" y="300" text-anchor="middle">Actual wRC+</text><text class="axis-title" transform="translate(13 151) rotate(-90)" text-anchor="middle">Expected wRC+</text></svg>
 <div class="chart-legend"><span><i class="legend-dot teal"></i>Below expected</span><span><i class="legend-dot rust"></i>Above expected</span></div></section>
-<section class="reading-note"><span class="eyebrow">A NOTE ON THE NUMBERS</span><h2>A signal.<br>Not a certainty.</h2><p>Large gaps can reflect luck, omitted skills, or model error. A forecast is a starting point for a closer look.</p><a class="text-link" href="{{ url_for('validation') }}">See how the model holds up {{ icon('arrow') }}</a></section>
+<section class="reading-note"><span class="eyebrow">A NOTE ON THE NUMBERS</span><h2>Forecast<br>uncertainty.</h2><p>Large gaps can reflect luck, omitted skills, or model error. A forecast is a starting point for a closer look.</p><a class="text-link" href="{{ url_for('validation') }}">View model validation {{ icon('arrow') }}</a></section>
 <div class="scale-note"><span class="scale-number">100</span><p>League-average wRC+.<br>Each point above or below is one percentage point versus average.</p></div>
 </aside>
 </div>
