@@ -1,0 +1,4 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block breadcrumb %}Dashboard{% endblock %}
+{% block content %}<section class="error-state"><p class="eyebrow">xwRC+ LAB</p><h1>{{ title }}<span class="heading-period">.</span></h1><p class="lead">{{ message }}</p>{% if command %}<pre><code>{{ command }}</code></pre><p class="small-copy">The dashboard displays completed, saved analysis artifacts.</p>{% else %}<a class="button button-primary" href="{{ url_for('index') }}">Return to the explorer</a>{% endif %}</section>{% endblock %}

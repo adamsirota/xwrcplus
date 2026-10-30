@@ -1,0 +1,43 @@
+{% from '_macros.html' import icon %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>{% block title %}Player explorer{% endblock %} · xwRC+ Lab</title>
+  <link rel="icon" href="{{ url_for('static',filename='mark.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static',filename='dashboard.css') }}">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<svg class="svg-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="icon-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+<symbol id="icon-chart" viewBox="0 0 24 24"><path d="M4 3v17h17M8 15l4-5 4 2 5-7"/></symbol>
+<symbol id="icon-book" viewBox="0 0 24 24"><path d="M12 5v15M3 4c4-1 6 0 9 1 3-1 5-2 9-1v15c-4-1-6 0-9 1-3-1-5-2-9-1Z"/></symbol>
+<symbol id="icon-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+<symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+<symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+<symbol id="icon-back" viewBox="0 0 24 24"><path d="M20 12H5m6-6-6 6 6 6"/></symbol>
+<symbol id="icon-up" viewBox="0 0 24 24"><path d="m4 17 6-6 4 3 6-9m-6 0h6v6"/></symbol>
+<symbol id="icon-down" viewBox="0 0 24 24"><path d="m4 7 6 6 4-3 6 9m-6 0h6v-6"/></symbol>
+</defs></svg>
+<div class="app-shell">
+<aside class="sidebar" aria-label="Research navigation">
+  <a class="brand" href="{{ url_for('index') }}"><img src="{{ url_for('static',filename='mark.svg') }}" alt="" width="38" height="38"><span>xwRC<span class="brand-plus">+</span><small>THE HITTING LAB</small></span></a>
+  <div class="season-switch"><span class="eyebrow">SEASON STUDY</span><div>{% if s %}{{ s.year }} <span>→</span> {{ s.year+1 }}{% else %}MLB hitting{% endif %}<span class="status-dot" aria-hidden="true"></span></div></div>
+  <nav class="main-nav" aria-label="Main">
+    <a href="{{ url_for('index') }}" {% if nav in ['index','player'] %}class="active" aria-current="page"{% endif %}>{{ icon('grid') }}<span>Player explorer</span><span class="nav-index">01</span></a>
+    <a href="{{ url_for('validation') }}" {% if nav=='validation' %}class="active" aria-current="page"{% endif %}>{{ icon('chart') }}<span>Model validation</span><span class="nav-index">02</span></a>
+    <a href="{{ url_for('methodology') }}" {% if nav=='methodology' %}class="active" aria-current="page"{% endif %}>{{ icon('book') }}<span>Research notes</span><span class="nav-index">03</span></a>
+  </nav>
+  <div class="sidebar-note"><span class="eyebrow">READ THE SIGNAL</span><p>A season tells one story.<br>The underlying skills<br>can tell another.</p><div class="seam" aria-hidden="true"></div></div>
+  <div class="sidebar-footer"><span class="status-dot" aria-hidden="true"></span><span>{% if s %}{{ s.total_seasons|num(0) }} player-seasons<small>Historical data · {{ s.config.start_season }}–{{ s.year }}</small>{% else %}Saved analysis<small>Local research dashboard</small>{% endif %}</span></div>
+</aside>
+<div class="workspace">
+  <header class="topbar"><div><span class="muted">Research</span><span class="breadcrumb-slash">/</span>{% block breadcrumb %}Player explorer{% endblock %}</div><span class="snapshot-label">{% if s %}<span class="status-dot" aria-hidden="true"></span>Snapshot · {{ s.date }}{% else %}xwRC+ Lab{% endif %}</span></header>
+  <main id="main" tabindex="-1">{% block content %}{% endblock %}</main>
+  <footer class="page-footer"><span>xwRC+ Lab <span class="footer-dot">·</span> Independent baseball research</span><span>Estimates, not guarantees.</span></footer>
+</div>
+</div>
+</body>
+</html>

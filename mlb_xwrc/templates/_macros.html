@@ -1,0 +1,7 @@
+{% macro icon(name) -%}
+<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#icon-{{ name }}"/></svg>
+{%- endmacro %}
+{% macro change(value) -%}
+{% if value is not none %}<span class="number {{ 'positive' if value > 0 else 'negative' if value < 0 else '' }}">{{ value|num(1,true) }}</span>{% else %}<span class="muted">—</span>{% endif %}
+{%- endmacro %}
+{% macro initials(name) -%}<span class="initials" aria-hidden="true">{{ name.split()[0][0] }}{{ name.split()[-1][0] }}</span>{%- endmacro %}

@@ -15,5 +15,8 @@ dependencies = {file = ["requirements.txt"]}
 [tool.setuptools.packages.find]
 include = ["mlb_xwrc*"]
 
+[tool.setuptools.package-data]
+mlb_xwrc = ["templates/*.html", "static/*.css", "static/*.svg"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

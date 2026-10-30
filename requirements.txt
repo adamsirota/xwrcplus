@@ -5,3 +5,4 @@ xgboost>=2.1,<4
 matplotlib>=3.9,<4
 pybaseball>=2.2.7,<3
 pytest>=8,<10
+Flask>=3.1,<4
