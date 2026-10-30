@@ -1,0 +1,14 @@
+{
+  "created_utc": "2026-10-27T19:17:43.298960+00:00",
+  "provenance": "FanGraphs (pybaseball or documented current-API fallback) + pybaseball/Baseball Savant",
+  "contact_join": "stable FanGraphs \u2192 MLBAM identifiers; unmatched rows retain missing values",
+  "forecast_interval_radius": 40.195317767106786,
+  "config": {
+    "application_season": 2026,
+    "start_season": 2016,
+    "min_train_pa": 100,
+    "min_rank_pa": 300,
+    "gap_threshold": 10,
+    "data_label": "MLB regular-season source data"
+  }
+}

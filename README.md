@@ -4,7 +4,41 @@ A reproducible Python project for estimating 2026 expected hitting and evaluatin
 
 **xwRC+ here is a project-specific model estimate, not an official Statcast statistic.** A discrepancy is a research signal, not proof of luck or future improvement.
 
-## Quick start (Windows PowerShell)
+## Run the dashboard
+
+The checked-in `findings/` snapshot lets a fresh clone display the completed analysis immediately. No live data download, API key, or model training is needed to view it.
+
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-web.txt
+.\.venv\Scripts\python.exe app.py
+```
+
+Open **http://127.0.0.1:5000**. Use `python -m mlb_xwrc serve --port 5001` to choose another port. On macOS/Linux, create the environment with `python3 -m venv .venv` and use `.venv/bin/python`.
+
+The explorer provides player search, candidate filters, sorting, PA thresholds, CSV exports, and individual career/forecast views. Model validation and research notes explain the backtests and limitations. All UI assets are local.
+
+## Host from this GitHub repository
+
+GitHub Pages serves static sites and cannot execute Flask. To run this app publicly, connect the repository to a Python web host. A minimal `render.yaml` is included for Render:
+
+1. Create a **Web Service** from `adamsirota/xwrcplus`, or use Render's Blueprint flow to load `render.yaml`.
+2. Build: `pip install -r requirements-web.txt`
+3. Start: `gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --threads 2 --timeout 60`
+
+`.python-version` selects the latest Python 3.12 patch. The health check uses `/` and fails clearly if the findings are incomplete. Gunicorn is installed on Linux; Windows development uses Flask's local server. Hosting is configured but no external service is automatically created or deployed by this repository.
+
+The tracked snapshot contains only the tables, charts, public provenance, and compact player history needed to display/download the findings. Raw source caches, virtual environments, trained model files, working notes, and local environment metadata are excluded from Git.
+
+To refresh the published findings after a full analysis run:
+
+```powershell
+.\.venv\Scripts\python.exe -m mlb_xwrc bundle --config config.json
+```
+
+Review and commit the changed `findings/` files, then redeploy. The dashboard prefers locally regenerated `results/` when available; otherwise it uses `findings/`. Restart the server after updating a snapshot.
+
+## Reproduce the full analysis (Windows PowerShell)
 
 Use Python 3.10 or newer. From this folder:
 
@@ -84,4 +118,23 @@ Tests cover ID joins, traded-player totals, rate units, feature allowlisting, ch
 
 Errors are conditional on returning hitters meeting the minimum PA. Injuries, retirement, roster selection, and survivorship bias are outside this model. A forecast below a player's 2026 result may reflect statistical regression as well as aging. Small differences between players are usually not meaningful. Correlated-feature importance is not causal. Career charts plot season indexes; averaging them is not an exact official career wRC+ calculation. The final expected estimator has more historical training data than early calibration inputs, which can introduce distribution shift.
 
-See SPEC.md for the approved scope and tasks/ for the implementation record. `requirements.txt` permits compatible versions; `requirements-lock.txt` records the exact development environment.
+`requirements.txt` contains the full research/test dependencies. `requirements-web.txt` contains only the hosted viewer dependencies.
+
+## Flask findings dashboard
+
+The read-only dashboard displays the completed results without retraining or downloading data. It includes searchable/sortable player rankings, below/above-expected and rebound/regression views, PA filters, paginated tables, filtered CSV exports, individual player career charts and empirical forecast ranges, model validation, and research notes.
+
+After installing the updated requirements, launch it from this folder:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m mlb_xwrc serve --config config.json
+```
+
+Open **http://127.0.0.1:5000**. To choose another port, add `--port 5001`. An equivalent Flask entry point is `python -m flask --app app run` (or `python app.py`). The app binds to loopback and disables debug mode. Press Ctrl+C in the serving terminal to stop it.
+
+The snapshot date and original dataset label are shown in the UI. Candidate tabs apply the configured gap threshold (10 points by default). Search is literal and accent-insensitive. The filtered export includes all matching rows, not only the current page. Lowering PA below the default ranking threshold displays a small-sample notice. Rows with more than 40% missing selected skills data stay excluded from the explorer. A missing/incomplete result set shows an actionable 503 page; unknown players and invalid filters have clear error pages.
+
+The app reads a snapshot once per process. After regenerating the analysis, restart the dashboard to see the new results. Templates, CSS, icons, and SVG charts are served locally; no external JavaScript/font/CDN dependency is needed. Static validation figures reuse the generated PNGs. For public hosting, use the production Gunicorn entry point described above.
+
+Frontend tests use Flask's test client: `python -m pytest tests/test_web.py -q`. The existing modeling tests are unchanged.

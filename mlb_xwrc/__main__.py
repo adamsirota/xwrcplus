@@ -1,4 +1,4 @@
-"""Download data, run analysis, or serve the dashboard."""
+"""Download data, run analysis, bundle findings, or serve the dashboard."""
 import argparse
 import json
 import sys
@@ -8,7 +8,7 @@ from .data import download
 
 def main():
     parser = argparse.ArgumentParser(description='Expected MLB hitting and next-season aging projections')
-    parser.add_argument('command',choices=['download','run','serve'])
+    parser.add_argument('command',choices=['download','run','bundle','serve'])
     parser.add_argument('--config',default='config.json')
     parser.add_argument('--port',type=int,default=5000,help='Local dashboard port (serve only)')
     args = parser.parse_args()
@@ -20,6 +20,10 @@ def main():
                 raise ValueError('Port must be between 1 and 65535.')
             from .web import create_app
             create_app(config_path).run(host='127.0.0.1',port=args.port,debug=False,use_reloader=False)
+            return 0
+        if args.command=='bundle':
+            from .bundle import bundle_findings
+            bundle_findings(config_path.parent,config)
             return 0
         if config['application_season']-config['start_season'] < 8:
             raise ValueError('At least eight historical seasons are required for chronological forecast evaluation.')

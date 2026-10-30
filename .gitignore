@@ -6,3 +6,15 @@ data/
 results*/
 .env
 *.pem
+
+# Local planning/review material and build artifacts
+SPEC.md
+CONSTRAINTS.md
+REVIEW.md
+tasks/
+requirements-lock.txt
+build/
+dist/
+*.log
+.env.*
+!.env.example

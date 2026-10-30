@@ -149,3 +149,21 @@ def test_dashboard_uses_bundled_findings_on_a_fresh_checkout(client, tmp_path):
     (tmp_path/'results').rename(tmp_path/'findings')
     assert client.get('/').status_code == 200
     assert b'Ana Pe' in client.get('/').data
+
+def test_bundled_snapshot_excludes_local_environment_metadata(client, tmp_path):
+    from mlb_xwrc.bundle import BUNDLED_FILES, bundle_findings
+    source = tmp_path/'results'
+    for name in BUNDLED_FILES + ['expected_2026.csv','forecasts_2027.csv']:
+        if not (source/name).exists():
+            (source/name).write_text('fixture')
+    processed = tmp_path/'data/processed'
+    processed.mkdir(parents=True)
+    pd.read_csv(source/'expected_2026.csv')[['player_id','season','pa','wrc_plus']].to_csv(processed/'player_seasons.csv',index=False)
+    manifest = json.loads((source/'run_manifest.json').read_text())
+    manifest['python'] = 'HIDDEN LOCAL ENVIRONMENT'
+    manifest['config']['input_csv'] = 'HIDDEN LOCAL FILE'
+    (source/'run_manifest.json').write_text(json.dumps(manifest))
+    target = bundle_findings(tmp_path,json.loads((tmp_path/'config.json').read_text()))
+    assert 'HIDDEN LOCAL' not in (target/'run_manifest.json').read_text()
+    assert (target/'player_history.csv').exists()
+    assert json.loads((target/'run_manifest.json').read_text())['config']['data_label'] == 'SYNTHETIC TEST DATA'
