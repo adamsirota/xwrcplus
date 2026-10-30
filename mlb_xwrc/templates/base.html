@@ -28,7 +28,6 @@
   <nav class="main-nav" aria-label="Main">
     <a href="{{ url_for('index') }}" {% if nav in ['index','player'] %}class="active" aria-current="page"{% endif %}>{{ icon('grid') }}<span>Player explorer</span><span class="nav-index">01</span></a>
     <a href="{{ url_for('validation') }}" {% if nav=='validation' %}class="active" aria-current="page"{% endif %}>{{ icon('chart') }}<span>Model validation</span><span class="nav-index">02</span></a>
-    <a href="{{ url_for('methodology') }}" {% if nav=='methodology' %}class="active" aria-current="page"{% endif %}>{{ icon('book') }}<span>Research notes</span><span class="nav-index">03</span></a>
   </nav>
   <div class="sidebar-note"><span class="eyebrow">PERFORMANCE MEASURES</span><p>Actual wRC+.<br>Expected performance.<br>Next-season forecasts.</p><div class="seam" aria-hidden="true"></div></div>
   <div class="sidebar-footer"><span class="status-dot" aria-hidden="true"></span><span>{% if s %}{{ s.total_seasons|num(0) }} player-seasons<small>Historical data · {{ s.config.start_season }}–{{ s.year }}</small>{% else %}Saved analysis<small>Local research dashboard</small>{% endif %}</span></div>

@@ -200,10 +200,6 @@ def create_app(config_path='config.json'):
         return render_template('validation.html',folds=records(folds),
             expected=records(g.findings['expected_metrics']),sensitivity=records(g.findings['sensitivity']))
 
-    @app.get('/methodology')
-    def methodology():
-        return render_template('methodology.html',coverage=records(g.findings['coverage']))
-
     @app.get('/export/players.csv')
     def export_players():
         frame,_,_=filtered_players()

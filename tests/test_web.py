@@ -90,10 +90,12 @@ def test_templates_escape_player_names(client):
     assert b'&lt;script&gt;' in page.data
 
 
-def test_validation_and_methodology_pages(client):
+def test_validation_page_remains_available(client):
     assert client.get('/validation').status_code == 200
     assert b'previous' in client.get('/validation').data.lower()
-    assert client.get('/methodology').status_code == 200
+    assert client.get('/methodology').status_code == 404
+    assert b'Research notes' not in client.get('/').data
+    assert b'/methodology' not in client.get('/players/1').data
 
 
 def test_missing_results_are_actionable(tmp_path):
